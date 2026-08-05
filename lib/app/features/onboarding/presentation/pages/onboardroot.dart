@@ -49,7 +49,7 @@ class _OnboardrootState extends State<Onboardroot> {
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 800),
                         width: currentIndex == index 
-                        ? 30 :20,
+                        ? 40 :20,
                         height: 5,
                         decoration: BoxDecoration(
                           color: currentIndex == index
