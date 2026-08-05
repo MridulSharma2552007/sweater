@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sweater/core/theme/app_text_theme.dart';
 import 'package:sweater/core/theme/theme.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 class Onboardroot extends StatefulWidget {
   const Onboardroot({super.key});
@@ -61,7 +63,7 @@ class _OnboardrootState extends State<Onboardroot> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 40),
 
                 Container(
                   height: 80,
@@ -74,10 +76,10 @@ class _OnboardrootState extends State<Onboardroot> {
                   child: Center(child: Text('S')),
                 ),
                 SizedBox(height: 20),
-                Text("Meet Sweater"),
+                Text("Meet Sweater",style: AppTextTheme.textTheme.bodyLarge,selectionColor: AppTheme.ink(context),),
                 SizedBox(height: 20),
                 Text(
-                  'A warm little home for everything you think, read, and \n remember — kept in plain Markdown, on your machine.',
+                  'A warm little home for everything you think, read, and \n remember — kept in plain Markdown, on your machine.',style: AppTextTheme.textTheme.bodySmall,selectionColor: AppTheme.inkSoft(context),
                 ),
                 SizedBox(height: 40),
 
@@ -88,14 +90,14 @@ class _OnboardrootState extends State<Onboardroot> {
                       AppTheme.accentRust(context),
                     ),
                     foregroundColor: WidgetStateProperty.all(
-                      AppTheme.ink(context),
+                      AppTheme.terminalPaper(context),
                     ),
 
                     fixedSize: MaterialStatePropertyAll(
                       Size(double.infinity, 60),
                     ),
                   ),
-                  child: Text('Get Started'),
+                  child: Text('Get Started',style: AppTextTheme.textTheme.bodyMedium,),
                 ),
               ],
             ),
