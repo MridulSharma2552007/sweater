@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sweater/core/theme/app_colors.dart';
-import 'package:sweater/core/theme/theme.dart';
 
 class AppTextTheme {
   AppTextTheme._();

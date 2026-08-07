@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sweater/core/share/widgets/widgets.dart';
 import 'package:sweater/core/theme/app_text_theme.dart';
 import 'package:sweater/core/theme/theme.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Onboardroot extends StatefulWidget {
   const Onboardroot({super.key});
@@ -17,6 +17,14 @@ class _OnboardrootState extends State<Onboardroot> {
   void incrementer() {
     setState(() {
       currentIndex = (currentIndex + 1) % pageCount;
+    });
+  }
+
+  void decrementer() {
+    setState(() {
+      if (currentIndex > 0) {
+        currentIndex -= 1;
+      }
     });
   }
 
@@ -49,6 +57,7 @@ class _OnboardrootState extends State<Onboardroot> {
         OnboardingPageContent(
           currentIndex: currentIndex,
           onPressed: incrementer,
+          onBackPressed: decrementer,
         ),
       ],
     );
@@ -70,22 +79,23 @@ class _OnboardrootState extends State<Onboardroot> {
             ),
           ),
           const Spacer(),
-          Center(
-            child: _buildPageContent(context),
-          ),
+          Center(child: _buildPageContent(context)),
           const Spacer(),
         ],
       ),
     );
   }
 }
+
 class OnboardingPageContent extends StatelessWidget {
   final int currentIndex;
   final VoidCallback onPressed;
+  final VoidCallback onBackPressed;
 
   const OnboardingPageContent({
     required this.currentIndex,
     required this.onPressed,
+    required this.onBackPressed,
     super.key,
   });
 
@@ -129,25 +139,10 @@ class OnboardingPageContent extends StatelessWidget {
           style: AppTextTheme.textTheme.bodySmall,
           selectionColor: AppTheme.inkSoft(context),
         ),
+
+       
         const SizedBox(height: 40),
-        ElevatedButton(
-          onPressed: onPressed,
-          style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all(
-              AppTheme.accentRust(context),
-            ),
-            foregroundColor: WidgetStateProperty.all(
-              AppTheme.terminalPaper(context),
-            ),
-            fixedSize: const MaterialStatePropertyAll(
-              Size(double.infinity, 60),
-            ),
-          ),
-          child: Text(
-            'Get Started',
-            style: AppTextTheme.textTheme.bodyMedium,
-          ),
-        ),
+        SweaterAccentButton(onPressed: onPressed, label: 'Get Started'),
       ],
     );
   }
@@ -155,46 +150,102 @@ class OnboardingPageContent extends StatelessWidget {
   Widget _buildPageOne(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
+      
+
       children: [
         Container(
-          height: 80,
-          width: 80,
+          height: 50,
+          width: 50,
           decoration: BoxDecoration(
-            color: AppTheme.inkSoft(context),
+            color: AppTheme.accentSageDim(context),
             borderRadius: BorderRadius.circular(20),
           ),
-          child: const Center(child: Text('W')),
+          child: Center(
+            child: Icon(
+              Icons.indeterminate_check_box,
+              color: AppTheme.accentSage(context),
+            ),
+          ),
         ),
         const SizedBox(height: 20),
         Text(
-          'Write Notes',
+          'Where should we knit your \n notes?',
           style: AppTextTheme.textTheme.bodyLarge,
           selectionColor: AppTheme.ink(context),
+          textAlign: TextAlign.center,
         ),
         const SizedBox(height: 20),
         Text(
-          'Capture ideas quickly and keep them simple with markdown-friendly notes.',
+          'Pick a folder on this device. Sweater reads and writes plain\n .md files there — nothing leaves your computer unless you tell\nit to.',
+          textAlign: TextAlign.center,
           style: AppTextTheme.textTheme.bodySmall,
           selectionColor: AppTheme.inkSoft(context),
         ),
-        const SizedBox(height: 40),
-        ElevatedButton(
-          onPressed: onPressed,
-          style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all(
-              AppTheme.accentRust(context),
+        const SizedBox(height: 20),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            
+            Text(
+              
+              'VAULT LOCATION',
+              style: AppTextTheme.textTheme.labelSmall,
+            
+              textAlign: TextAlign.left,
             ),
-            foregroundColor: WidgetStateProperty.all(
-              AppTheme.terminalPaper(context),
-            ),
-            fixedSize: const MaterialStatePropertyAll(
-              Size(double.infinity, 60),
-            ),
+            SizedBox(height: 10,),
+                   Container(
+          height: 80,
+          width: 600,
+          decoration: BoxDecoration(
+            color: AppTheme.accentRustDim(context).withAlpha(10),
+            borderRadius: BorderRadius.circular(20),
           ),
-          child: Text(
-            'Next',
-            style: AppTextTheme.textTheme.bodyMedium,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            children: [
+              Icon(Icons.folder, color: AppTheme.accentRust(context)),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Text(
+                  '~/Documents/sweater',
+                  style: AppTextTheme.textTheme.bodySmall,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              TextButton(
+                onPressed: () {},
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(
+                    AppTheme.accentRust(context),
+                  ),
+                  foregroundColor: WidgetStateProperty.all(
+                    AppTheme.terminalPaper(context),
+                  ),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                ),
+                child: const Text('Browse'),
+              ),
+            ],
           ),
+        ),
+
+    
+          ],
+        ),
+
+     const SizedBox(height: 40),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SweaterInactiveButton(onPressed: onBackPressed, label: 'Back'),
+            const SizedBox(width: 20),
+            SweaterAccentButton(onPressed: onPressed, label: 'Continue'),
+          ],
         ),
       ],
     );
@@ -226,24 +277,7 @@ class OnboardingPageContent extends StatelessWidget {
           selectionColor: AppTheme.inkSoft(context),
         ),
         const SizedBox(height: 40),
-        ElevatedButton(
-          onPressed: onPressed,
-          style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all(
-              AppTheme.accentRust(context),
-            ),
-            foregroundColor: WidgetStateProperty.all(
-              AppTheme.terminalPaper(context),
-            ),
-            fixedSize: const MaterialStatePropertyAll(
-              Size(double.infinity, 60),
-            ),
-          ),
-          child: Text(
-            'Next',
-            style: AppTextTheme.textTheme.bodyMedium,
-          ),
-        ),
+        SweaterAccentButton(onPressed: onPressed, label: 'Next'),
       ],
     );
   }
@@ -274,24 +308,7 @@ class OnboardingPageContent extends StatelessWidget {
           selectionColor: AppTheme.inkSoft(context),
         ),
         const SizedBox(height: 40),
-        ElevatedButton(
-          onPressed: onPressed,
-          style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all(
-              AppTheme.accentRust(context),
-            ),
-            foregroundColor: WidgetStateProperty.all(
-              AppTheme.terminalPaper(context),
-            ),
-            fixedSize: const MaterialStatePropertyAll(
-              Size(double.infinity, 60),
-            ),
-          ),
-          child: Text(
-            'Restart',
-            style: AppTextTheme.textTheme.bodyMedium,
-          ),
-        ),
+        SweaterAccentButton(onPressed: onPressed, label: 'Restart'),
       ],
     );
   }
