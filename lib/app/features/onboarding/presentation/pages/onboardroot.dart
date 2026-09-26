@@ -222,7 +222,7 @@ class OnboardingPageContent extends StatelessWidget {
                   foregroundColor: WidgetStateProperty.all(
                     AppTheme.terminalPaper(context),
                   ),
-                  shape: MaterialStateProperty.all(
+                  shape: WidgetStateProperty.all(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),

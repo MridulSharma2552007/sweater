@@ -38,7 +38,7 @@ class SweaterInactiveButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ButtonStyle(
-        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+        shape: WidgetStateProperty.all(RoundedRectangleBorder(
           borderRadius: BorderRadiusGeometry.circular(20)
         )),
     
@@ -47,11 +47,11 @@ class SweaterInactiveButton extends StatelessWidget {
         foregroundColor: WidgetStateProperty.all(
           AppTheme.ink(context),
         ),
-          side: MaterialStateProperty.resolveWith<BorderSide?>(
+          side: WidgetStateProperty.resolveWith<BorderSide?>(
     (states) {
-      final opacity = states.contains(MaterialState.hovered) ? 0.6: 0.1;
+      final opacity = states.contains(WidgetState.hovered) ? 0.6: 0.1;
       return BorderSide(
-        color: AppTheme.ink(context).withOpacity(opacity),
+        color: AppTheme.ink(context).withValues(alpha: opacity),
         width: 1,
       );
     },
